@@ -138,6 +138,8 @@ fn write_m4a_artwork(audio_path: &PathBuf, image_path: &PathBuf) -> Result<()> {
         .first_or_octet_stream()
         .to_string();
 
+    println!("Image: {} ({} bytes, {})", image_path.display(), image_data.len(), mime);
+
     let img = match mime.as_str() {
         "image/png" => mp4ameta::Img::png(image_data),
         "image/bmp" => mp4ameta::Img::bmp(image_data),
@@ -145,8 +147,16 @@ fn write_m4a_artwork(audio_path: &PathBuf, image_path: &PathBuf) -> Result<()> {
     };
 
     let mut tag = mp4ameta::Tag::read_from_path(audio_path)?;
+    println!("M4A tag read successfully");
+    
+    // Remove existing artwork first
+    tag.remove_artworks();
+    
     tag.set_artwork(img);
+    println!("Artwork set in memory");
+    
     tag.write_to_path(audio_path)?;
+    println!("M4A file written successfully");
     Ok(())
 }
 

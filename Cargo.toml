@@ -6,12 +6,10 @@ edition = "2021"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 id3 = "1"
-mp4parse = "0.17"
-claxon = "0.4"
+mp4ameta = "0.13"
 metaflac = "0.2"
 anyhow = "1"
 mime_guess = "2"
-base64 = "0.22"
 
 [profile.release]
 opt-level = "z"
